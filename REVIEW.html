@@ -147,6 +147,7 @@ input:focus,select:focus,textarea:focus{
   font-size:22px;
   cursor:pointer;
 }
+.star::before{content:"\2605";}
 .star.active{
   background:linear-gradient(180deg,#fff1c8,#e8c47a);
   border-color:#c8973a;
@@ -239,7 +240,7 @@ input:focus,select:focus,textarea:focus{
 <main class="page">
   <header class="hero">
     <div>
-      <div class="brand-pill"><span class="cup">☕</span> Ngopi Heula Ngabs</div>
+      <div class="brand-pill"><span class="cup">NHN</span> Ngopi Heula Ngabs</div>
       <h1>Bantu Kami Menyempurnakan Rasa</h1>
       <p class="subtitle">Feedback kamu membantu Ngopi Heula Ngabs bikin kopi yang makin enak dan konsisten.</p>
       <p class="microcopy">Isi jujur aja, masukan kamu sangat berarti.</p>
@@ -331,8 +332,8 @@ input:focus,select:focus,textarea:focus{
       </form>
 
       <div class="success" id="successState">
-        <div class="success-icon">☕</div>
-        <h2>Terima kasih, review kamu sudah masuk ☕</h2>
+        <div class="success-icon">NHN</div>
+        <h2>Terima kasih, review kamu sudah masuk</h2>
         <p>Feedback kamu sangat membantu kami menyempurnakan rasa dan pelayanan Ngopi Heula Ngabs.</p>
         <div class="actions">
           <button class="btn primary" id="againBtn" type="button">Kirim Review Lagi</button>
@@ -377,10 +378,10 @@ input:focus,select:focus,textarea:focus{
   function escapeHtml(value){return String(value == null ? '' : value).replace(/[&<>"']/g,function(char){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char];});}
   function fillSelect(id, options, placeholder){var select=$(id);select.innerHTML='<option value="">'+placeholder+'</option>'+options.map(function(option){return '<option value="'+escapeHtml(option)+'">'+escapeHtml(option)+'</option>';}).join('');}
   function makeButtons(targetId,inputId,options){var target=$(targetId);target.innerHTML=options.map(function(option){return '<button class="choice" type="button" data-value="'+escapeHtml(option)+'">'+escapeHtml(option)+'</button>';}).join('');target.addEventListener('click',function(event){var button=event.target.closest('button');if(!button)return;$(inputId).value=button.dataset.value;target.querySelectorAll('.choice').forEach(function(item){item.classList.toggle('active',item===button);});});}
-  function makeRating(){var target=$('ratingGroup');target.innerHTML=[1,2,3,4,5].map(function(value){return '<button class="star" type="button" role="radio" aria-checked="false" data-value="'+value+'" aria-label="Rating '+value+'">â˜…</button>';}).join('');target.addEventListener('click',function(event){var button=event.target.closest('button');if(!button)return;var value=Number(button.dataset.value);$('rating').value=value;target.querySelectorAll('.star').forEach(function(item){var active=Number(item.dataset.value)<=value;item.classList.toggle('active',active);item.setAttribute('aria-checked',String(Number(item.dataset.value)===value));});});}
+  function makeRating(){var target=$('ratingGroup');target.innerHTML=[1,2,3,4,5].map(function(value){return '<button class="star" type="button" role="radio" aria-checked="false" data-value="'+value+'" aria-label="Rating '+value+'"></button>';}).join('');target.addEventListener('click',function(event){var button=event.target.closest('button');if(!button)return;var value=Number(button.dataset.value);$('rating').value=value;target.querySelectorAll('.star').forEach(function(item){var active=Number(item.dataset.value)<=value;item.classList.toggle('active',active);item.setAttribute('aria-checked',String(Number(item.dataset.value)===value));});});}
   function variantLabel(v){return v.label || [v.menu,v.milk,v.coffee_level,v.sugar_level,v.size].filter(Boolean).join(' - ');}
   function loadMenus(){if(!apiReady()){fillSelect('menu',reviewOptions.menu,'Pilih menu');return;}fetch(REVIEW_API_URL+'?action=getActiveVariants&t='+Date.now()).then(function(r){return r.json();}).then(function(data){var menus=(data.variants||[]).map(variantLabel);fillSelect('menu',menus.length?menus:reviewOptions.menu,'Pilih menu');renderSideMenus(data.variants||[]);}).catch(function(){fillSelect('menu',reviewOptions.menu,'Pilih menu');});}
-  function renderSideMenus(variants){var list=document.querySelector('.menu-list');if(!list||!variants.length)return;list.innerHTML=variants.slice(0,6).map(function(v){return '<div class="menu-mini"><strong>'+escapeHtml(v.menu+' '+(v.milk||''))+'</strong><span>'+escapeHtml([v.coffee_level,v.sugar_level,v.size].filter(Boolean).join(' Â· '))+'</span></div>';}).join('');}
+  function renderSideMenus(variants){var list=document.querySelector('.menu-list');if(!list||!variants.length)return;list.innerHTML=variants.slice(0,6).map(function(v){return '<div class="menu-mini"><strong>'+escapeHtml(v.menu+' '+(v.milk||''))+'</strong><span>'+escapeHtml([v.coffee_level,v.sugar_level,v.size].filter(Boolean).join(' - '))+'</span></div>';}).join('');}
   function getPayload(){return {timestamp:new Date().toISOString(),review_id:'REV-'+Date.now().toString(36).toUpperCase(),order_id:$('order_id').value.trim(),customer_name:$('customer_name').value.trim(),whatsapp:$('whatsapp').value.trim(),menu:$('menu').value,rating:Number($('rating').value),rasa:$('rasa').value.trim(),tingkat_manis:$('tingkat_manis').value,packaging:$('packaging').value||'',worth_it:$('worth_it').value,repeat_intent:$('repeat_intent').value,testimoni:$('testimoni').value.trim(),izin_posting:$('izin_posting').checked?'Ya, boleh diposting':'Jangan dulu',source:'web_review'};}
   function applyPrefillFromUrl(){var params=new URLSearchParams(window.location.search);var orderId=params.get('order_id')||params.get('oid')||'';var name=params.get('name')||params.get('nama')||'';var wa=params.get('wa')||params.get('whatsapp')||'';if(orderId)$('order_id').value=orderId;if(name)$('customer_name').value=name;if(wa)$('whatsapp').value=wa;}
   function validate(payload){var missing=[];if(!payload.customer_name)missing.push('Nama');if(!payload.whatsapp)missing.push('Nomor WhatsApp');if(!payload.menu)missing.push('Menu');if(!payload.rating)missing.push('Rating');if(!payload.rasa)missing.push('Rasa');if(!payload.tingkat_manis)missing.push('Tingkat manis');if(!payload.worth_it)missing.push('Worth it');if(!payload.repeat_intent)missing.push('Mau beli lagi');if(missing.length)return 'Lengkapi dulu: '+missing.join(', ')+'.';if(!/^(\+?62|0)\d{8,13}$/.test(payload.whatsapp.replace(/\s|-/g,'')))return 'Nomor WhatsApp belum valid. Contoh: 08xxxxxxxxxx.';return '';}
@@ -400,5 +401,6 @@ input:focus,select:focus,textarea:focus{
 </script>
 </body>
 </html>
+
 
 
