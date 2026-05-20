@@ -1,0 +1,404 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Review Customer - Ngopi Heula Ngabs</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --coffee:#2c1a0e;
+  --brown:#5c3d2e;
+  --latte:#f5efe6;
+  --cream:#fffaf3;
+  --caramel:#c8973a;
+  --gold:#e8c47a;
+  --muted:#8a6a50;
+  --line:#eadfd4;
+  --danger:#b42318;
+  --green:#1f7a4d;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  min-height:100vh;
+  font-family:'DM Sans',Arial,sans-serif;
+  color:var(--coffee);
+  background:
+    radial-gradient(circle at top left,rgba(232,196,122,.34),transparent 32rem),
+    linear-gradient(180deg,#fff8ee 0%,#f3e6d7 100%);
+}
+button,input,select,textarea{font:inherit}
+button{border:0}
+.page{width:min(920px,100%);margin:0 auto;padding:28px 16px 42px}
+.hero{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:18px;
+  align-items:center;
+  padding:10px 0 20px;
+}
+.brand-pill{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  width:max-content;
+  padding:8px 12px;
+  border-radius:999px;
+  background:rgba(92,61,46,.09);
+  border:1px solid rgba(92,61,46,.12);
+  color:var(--brown);
+  font-size:12px;
+  font-weight:700;
+}
+.cup{
+  width:26px;height:26px;border-radius:9px;
+  display:grid;place-items:center;
+  background:var(--coffee);
+  color:var(--gold);
+  font-size:14px;
+}
+h1{
+  margin-top:16px;
+  max-width:680px;
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2rem,8vw,4.4rem);
+  line-height:1;
+  letter-spacing:-.02em;
+}
+.subtitle{
+  max-width:580px;
+  margin-top:14px;
+  color:var(--muted);
+  font-size:15px;
+  line-height:1.7;
+}
+.microcopy{
+  margin-top:14px;
+  color:var(--brown);
+  font-size:13px;
+}
+.layout{display:grid;grid-template-columns:1fr;gap:16px}
+.card{
+  background:rgba(255,250,243,.92);
+  border:1px solid rgba(234,223,212,.92);
+  border-radius:24px;
+  box-shadow:0 24px 54px rgba(44,26,14,.12);
+}
+.form-card{padding:22px}
+.section-title{
+  font-size:13px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:var(--caramel);
+  font-weight:800;
+  margin-bottom:16px;
+}
+.grid{display:grid;grid-template-columns:1fr;gap:14px}
+.field label,.group-label{
+  display:block;
+  margin-bottom:8px;
+  font-size:12px;
+  font-weight:800;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  color:var(--brown);
+}
+.hint{margin-top:6px;color:var(--muted);font-size:12px;line-height:1.5}
+input,select,textarea{
+  width:100%;
+  border:1.5px solid var(--line);
+  border-radius:14px;
+  background:#fffdf9;
+  color:var(--coffee);
+  padding:14px 15px;
+  outline:none;
+  transition:border-color .18s,box-shadow .18s,background .18s;
+}
+textarea{min-height:112px;resize:vertical;line-height:1.55}
+input:focus,select:focus,textarea:focus{
+  border-color:var(--caramel);
+  box-shadow:0 0 0 4px rgba(200,151,58,.14);
+  background:#fff;
+}
+.choice-grid{display:grid;grid-template-columns:1fr;gap:9px}
+.choice{
+  min-height:46px;
+  border-radius:14px;
+  border:1.5px solid var(--line);
+  background:#fffdf9;
+  color:var(--brown);
+  font-weight:700;
+  cursor:pointer;
+  transition:.18s;
+}
+.choice:hover{border-color:rgba(200,151,58,.65)}
+.choice.active{
+  background:var(--coffee);
+  color:var(--gold);
+  border-color:var(--coffee);
+}
+.stars{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.star{
+  min-height:52px;
+  border-radius:16px;
+  border:1.5px solid var(--line);
+  background:#fffdf9;
+  color:#b68b54;
+  font-size:22px;
+  cursor:pointer;
+}
+.star.active{
+  background:linear-gradient(180deg,#fff1c8,#e8c47a);
+  border-color:#c8973a;
+  color:#5c3d2e;
+}
+.divider{height:1px;background:var(--line);margin:22px 0}
+.check-row{
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  border:1.5px solid var(--line);
+  border-radius:16px;
+  background:#fffdf9;
+  padding:13px;
+}
+.check-row input{width:18px;height:18px;margin-top:2px;accent-color:var(--coffee)}
+.check-row label{font-size:14px;line-height:1.45;color:var(--brown);font-weight:700}
+.error{
+  display:none;
+  margin-bottom:14px;
+  padding:12px 14px;
+  border-radius:14px;
+  background:#fff1ef;
+  color:var(--danger);
+  border:1px solid #ffd5cf;
+  font-size:13px;
+  line-height:1.5;
+}
+.error.show{display:block}
+.actions{display:grid;gap:10px;margin-top:18px}
+.btn{
+  min-height:52px;
+  border-radius:16px;
+  padding:0 18px;
+  cursor:pointer;
+  font-weight:800;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  text-decoration:none;
+}
+.btn.primary{background:var(--coffee);color:var(--gold);box-shadow:0 14px 28px rgba(44,26,14,.18)}
+.btn.secondary{background:#efe4da;color:var(--coffee)}
+.btn:disabled{opacity:.62;cursor:not-allowed}
+.success{
+  display:none;
+  padding:30px 22px;
+  text-align:center;
+}
+.success.show{display:block}
+.success-icon{
+  width:62px;height:62px;border-radius:22px;
+  display:grid;place-items:center;
+  margin:0 auto 16px;
+  background:var(--coffee);
+  color:var(--gold);
+  font-size:28px;
+}
+.success h2{
+  font-family:'Playfair Display',serif;
+  font-size:2rem;
+  line-height:1.1;
+  margin-bottom:10px;
+}
+.success p{color:var(--muted);line-height:1.7}
+.side-card{padding:20px}
+.side-card h2{font-family:'Playfair Display',serif;font-size:1.45rem;margin-bottom:8px}
+.side-card p{color:var(--muted);font-size:14px;line-height:1.65}
+.menu-list{display:grid;gap:10px;margin-top:16px}
+.menu-mini{
+  border-radius:18px;
+  background:#fffdf9;
+  border:1px solid var(--line);
+  padding:14px;
+}
+.menu-mini strong{display:block;margin-bottom:4px}
+.menu-mini span{color:var(--muted);font-size:13px}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+@media(min-width:760px){
+  .page{padding-top:44px}
+  .layout{grid-template-columns:minmax(0,1fr) 290px;align-items:start}
+  .form-card{padding:30px}
+  .grid.two{grid-template-columns:1fr 1fr}
+  .choice-grid{grid-template-columns:repeat(2,1fr)}
+  .actions{grid-template-columns:1fr auto}
+}
+</style>
+</head>
+<body>
+<main class="page">
+  <header class="hero">
+    <div>
+      <div class="brand-pill"><span class="cup">â˜•</span> Ngopi Heula Ngabs</div>
+      <h1>Bantu Kami Menyempurnakan Rasa</h1>
+      <p class="subtitle">Feedback kamu membantu Ngopi Heula Ngabs bikin kopi yang makin enak dan konsisten.</p>
+      <p class="microcopy">Isi jujur aja, masukan kamu sangat berarti.</p>
+    </div>
+  </header>
+
+  <section class="layout">
+    <div class="card">
+      <form class="form-card" id="reviewForm" novalidate>
+        <p class="section-title">Review Customer</p>
+        <div class="error" id="errorBox" role="alert"></div>
+
+        <div class="grid two">
+          <div class="field">
+            <label for="customer_name">Nama</label>
+            <input id="customer_name" name="customer_name" autocomplete="name" placeholder="Nama kamu" required />
+          </div>
+          <div class="field">
+            <label for="whatsapp">Nomor WhatsApp</label>
+            <input id="whatsapp" name="whatsapp" inputmode="tel" autocomplete="tel" placeholder="08xxxxxxxxxx" required />
+          </div>
+        </div>
+
+        <div class="grid two" style="margin-top:14px">
+          <div class="field">
+            <label for="order_id">ID Order <span style="color:var(--muted);font-weight:500">(optional)</span></label>
+            <input id="order_id" name="order_id" placeholder="Contoh: NGH-0012" />
+          </div>
+          <div class="field">
+            <label for="menu">Menu yang dicoba</label>
+            <select id="menu" name="menu" required></select>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="field">
+          <span class="group-label">Rating</span>
+          <div class="stars" id="ratingGroup" role="radiogroup" aria-label="Rating 1 sampai 5"></div>
+          <input class="sr-only" id="rating" name="rating" required />
+        </div>
+
+        <div class="field" style="margin-top:16px">
+          <label for="rasa">Rasa kopinya gimana?</label>
+          <textarea id="rasa" name="rasa" placeholder="Contoh: kopinya creamy, aren-nya wangi, aftertaste enak..." required></textarea>
+        </div>
+
+        <div class="grid two" style="margin-top:14px">
+          <div class="field">
+            <label for="tingkat_manis">Tingkat manis</label>
+            <select id="tingkat_manis" name="tingkat_manis" required></select>
+          </div>
+          <div class="field">
+            <label for="packaging">Packaging</label>
+            <select id="packaging" name="packaging"></select>
+          </div>
+        </div>
+
+        <div class="grid two" style="margin-top:14px">
+          <div class="field">
+            <span class="group-label">Apakah harga worth it?</span>
+            <div class="choice-grid" id="worthGroup"></div>
+            <input class="sr-only" id="worth_it" name="worth_it" required />
+          </div>
+          <div class="field">
+            <span class="group-label">Apakah mau beli lagi?</span>
+            <div class="choice-grid" id="repeatGroup"></div>
+            <input class="sr-only" id="repeat_intent" name="repeat_intent" required />
+          </div>
+        </div>
+
+        <div class="field" style="margin-top:16px">
+          <label for="testimoni">Testimoni singkat <span style="color:var(--muted);font-weight:500">(optional)</span></label>
+          <textarea id="testimoni" name="testimoni" placeholder="Kalau mau, tulis satu-dua kalimat yang boleh kami baca sebagai masukan."></textarea>
+        </div>
+
+        <div style="margin-top:14px">
+          <div class="check-row">
+            <input id="izin_posting" name="izin_posting" type="checkbox" />
+            <label for="izin_posting">Ya, testimoni saya boleh diposting oleh Ngopi Heula Ngabs.</label>
+          </div>
+          <p class="hint">Kalau belum nyaman diposting, kosongkan aja. Review kamu tetap masuk.</p>
+        </div>
+
+        <div class="actions">
+          <button class="btn primary" id="submitBtn" type="submit">Kirim Review</button>
+          <a class="btn secondary" href="index.html">Kembali ke Beranda</a>
+        </div>
+      </form>
+
+      <div class="success" id="successState">
+        <div class="success-icon">â˜•</div>
+        <h2>Terima kasih, review kamu sudah masuk â˜•</h2>
+        <p>Feedback kamu sangat membantu kami menyempurnakan rasa dan pelayanan Ngopi Heula Ngabs.</p>
+        <div class="actions">
+          <button class="btn primary" id="againBtn" type="button">Kirim Review Lagi</button>
+          <a class="btn secondary" href="index.html">Kembali ke Beranda</a>
+        </div>
+      </div>
+    </div>
+
+    <aside class="card side-card">
+      <h2>Kopi rumahan, rasa dirapihin bareng-bareng.</h2>
+      <p>Review kamu bantu kami menjaga rasa aren, creamy body, tingkat manis, dan packaging tetap konsisten.</p>
+      <div class="menu-list">
+        <div class="menu-mini">
+          <strong>Aren Priangan Full Cream</strong>
+          <span>Es kopi susu creamy dengan gula aren.</span>
+        </div>
+        <div class="menu-mini">
+          <strong>Aren Priangan Oat Milk / Blend Oat</strong>
+          <span>Lebih ringan, tetap manis-aromatik.</span>
+        </div>
+      </div>
+    </aside>
+  </section>
+</main>
+
+<script>
+(function(){
+  var REVIEW_API_URL = window.NHG_API_URL || window.NHG_REVIEW_API_URL || 'https://script.google.com/macros/s/AKfycbwCJlAqgtl8Fte_QsOolFj2Fl2dQZx3QBboNFK70d26O77f8hTd0mPL8enEBbNg3MAyfw/exec';
+  var reviewOptions = {
+    menu: ['Aren Priangan Full Cream','Aren Priangan Oat Milk / Blend Oat'],
+    tingkat_manis: ['Kurang manis','Pas','Agak manis','Terlalu manis'],
+    packaging: ['Aman dan rapi','Cukup aman','Kurang aman','Ada kendala'],
+    worth_it: ['Ya','Ragu','Tidak'],
+    repeat_intent: ['Ya','Mungkin','Tidak']
+  };
+  var form = document.getElementById('reviewForm');
+  var errorBox = document.getElementById('errorBox');
+  var submitBtn = document.getElementById('submitBtn');
+  var successState = document.getElementById('successState');
+  function $(id){return document.getElementById(id);}
+  function apiReady(){return REVIEW_API_URL && REVIEW_API_URL.indexOf('PASTE_APPS_SCRIPT') === -1;}
+  function escapeHtml(value){return String(value == null ? '' : value).replace(/[&<>"']/g,function(char){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char];});}
+  function fillSelect(id, options, placeholder){var select=$(id);select.innerHTML='<option value="">'+placeholder+'</option>'+options.map(function(option){return '<option value="'+escapeHtml(option)+'">'+escapeHtml(option)+'</option>';}).join('');}
+  function makeButtons(targetId,inputId,options){var target=$(targetId);target.innerHTML=options.map(function(option){return '<button class="choice" type="button" data-value="'+escapeHtml(option)+'">'+escapeHtml(option)+'</button>';}).join('');target.addEventListener('click',function(event){var button=event.target.closest('button');if(!button)return;$(inputId).value=button.dataset.value;target.querySelectorAll('.choice').forEach(function(item){item.classList.toggle('active',item===button);});});}
+  function makeRating(){var target=$('ratingGroup');target.innerHTML=[1,2,3,4,5].map(function(value){return '<button class="star" type="button" role="radio" aria-checked="false" data-value="'+value+'" aria-label="Rating '+value+'">â˜…</button>';}).join('');target.addEventListener('click',function(event){var button=event.target.closest('button');if(!button)return;var value=Number(button.dataset.value);$('rating').value=value;target.querySelectorAll('.star').forEach(function(item){var active=Number(item.dataset.value)<=value;item.classList.toggle('active',active);item.setAttribute('aria-checked',String(Number(item.dataset.value)===value));});});}
+  function variantLabel(v){return v.label || [v.menu,v.milk,v.coffee_level,v.sugar_level,v.size].filter(Boolean).join(' - ');}
+  function loadMenus(){if(!apiReady()){fillSelect('menu',reviewOptions.menu,'Pilih menu');return;}fetch(REVIEW_API_URL+'?action=getActiveVariants&t='+Date.now()).then(function(r){return r.json();}).then(function(data){var menus=(data.variants||[]).map(variantLabel);fillSelect('menu',menus.length?menus:reviewOptions.menu,'Pilih menu');renderSideMenus(data.variants||[]);}).catch(function(){fillSelect('menu',reviewOptions.menu,'Pilih menu');});}
+  function renderSideMenus(variants){var list=document.querySelector('.menu-list');if(!list||!variants.length)return;list.innerHTML=variants.slice(0,6).map(function(v){return '<div class="menu-mini"><strong>'+escapeHtml(v.menu+' '+(v.milk||''))+'</strong><span>'+escapeHtml([v.coffee_level,v.sugar_level,v.size].filter(Boolean).join(' Â· '))+'</span></div>';}).join('');}
+  function getPayload(){return {timestamp:new Date().toISOString(),review_id:'REV-'+Date.now().toString(36).toUpperCase(),order_id:$('order_id').value.trim(),customer_name:$('customer_name').value.trim(),whatsapp:$('whatsapp').value.trim(),menu:$('menu').value,rating:Number($('rating').value),rasa:$('rasa').value.trim(),tingkat_manis:$('tingkat_manis').value,packaging:$('packaging').value||'',worth_it:$('worth_it').value,repeat_intent:$('repeat_intent').value,testimoni:$('testimoni').value.trim(),izin_posting:$('izin_posting').checked?'Ya, boleh diposting':'Jangan dulu',source:'web_review'};}
+  function applyPrefillFromUrl(){var params=new URLSearchParams(window.location.search);var orderId=params.get('order_id')||params.get('oid')||'';var name=params.get('name')||params.get('nama')||'';var wa=params.get('wa')||params.get('whatsapp')||'';if(orderId)$('order_id').value=orderId;if(name)$('customer_name').value=name;if(wa)$('whatsapp').value=wa;}
+  function validate(payload){var missing=[];if(!payload.customer_name)missing.push('Nama');if(!payload.whatsapp)missing.push('Nomor WhatsApp');if(!payload.menu)missing.push('Menu');if(!payload.rating)missing.push('Rating');if(!payload.rasa)missing.push('Rasa');if(!payload.tingkat_manis)missing.push('Tingkat manis');if(!payload.worth_it)missing.push('Worth it');if(!payload.repeat_intent)missing.push('Mau beli lagi');if(missing.length)return 'Lengkapi dulu: '+missing.join(', ')+'.';if(!/^(\+?62|0)\d{8,13}$/.test(payload.whatsapp.replace(/\s|-/g,'')))return 'Nomor WhatsApp belum valid. Contoh: 08xxxxxxxxxx.';return '';}
+  async function submitReview(payload){if(!apiReady())throw new Error('Endpoint Apps Script belum diisi.');var response=await fetch(REVIEW_API_URL,{method:'POST',body:JSON.stringify(Object.assign({action:'submitReview'},payload))});var text=await response.text();var data={};try{data=text?JSON.parse(text):{};}catch(err){data={ok:response.ok,message:text};}if(!response.ok||data.ok===false)throw new Error(data.message||'Review gagal dikirim.');return data;}
+  function showError(message){errorBox.textContent=message;errorBox.classList.add('show');}
+  function clearError(){errorBox.textContent='';errorBox.classList.remove('show');}
+  form.addEventListener('submit',async function(event){event.preventDefault();clearError();var payload=getPayload();var error=validate(payload);if(error){showError(error);return;}submitBtn.disabled=true;submitBtn.textContent='Mengirim...';try{await submitReview(payload);form.style.display='none';successState.classList.add('show');window.scrollTo({top:0,behavior:'smooth'});}catch(err){showError(err.message||'Review gagal dikirim. Coba lagi sebentar ya.');}finally{submitBtn.disabled=false;submitBtn.textContent='Kirim Review';}});
+  $('againBtn').addEventListener('click',function(){form.reset();$('rating').value='';$('worth_it').value='';$('repeat_intent').value='';document.querySelectorAll('.active').forEach(function(el){el.classList.remove('active');});successState.classList.remove('show');form.style.display='block';clearError();});
+  loadMenus();
+  fillSelect('tingkat_manis',reviewOptions.tingkat_manis,'Pilih tingkat manis');
+  fillSelect('packaging',reviewOptions.packaging,'Pilih kondisi packaging');
+  makeButtons('worthGroup','worth_it',reviewOptions.worth_it);
+  makeButtons('repeatGroup','repeat_intent',reviewOptions.repeat_intent);
+  makeRating();
+  applyPrefillFromUrl();
+})();
+</script>
+</body>
+</html>
+
+
